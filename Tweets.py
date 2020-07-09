@@ -2,6 +2,7 @@
 """ Pulls twitter data via twitter API"""
 import twitter
 
+from KafkaProducer import KafkaTestProducer
 from twitterConfig import TwitterConfig
 
 
@@ -17,9 +18,8 @@ class Tweets:
         # user = self.twitter_api.GetUser(screen_name="realDonaldTrump")
         # tweets = self.twitter_api.GetUserTimeline(screen_name="realDonaldTrump")
         twitter_stream = self.twitter_api.GetStreamSample()
-        for line in twitter_stream:
-            print(line.get('id'))
-            print(line.get('text'))
+        kafka = KafkaTestProducer()
+        kafka.get_twitter_stream(twitter_stream)
 
 
 if __name__ == "__main__":
